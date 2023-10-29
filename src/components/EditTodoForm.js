@@ -1,12 +1,17 @@
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AppContext } from '../context';
+import { EditingContext } from '../context';
 
-function EditTodoForm({ todo, saveEditedTodo, cancelEditing }) {
+function EditTodoForm({ todo }) {
 	const [editingTodoText, setEditingTodoText] = useState(todo.title);
+	const { updateTodo } = useContext(AppContext);
+	const { finishEditing } = useContext(EditingContext);
 
 	const handleSaveEditedTodo = () => {
 		if (editingTodoText.trim() !== '') {
-			saveEditedTodo(todo.id, { title: editingTodoText }); // Обновляем только название задачи
-			cancelEditing();
+			updateTodo(todo.id, { title: editingTodoText });
+			finishEditing();
 		}
 	};
 
@@ -19,7 +24,7 @@ function EditTodoForm({ todo, saveEditedTodo, cancelEditing }) {
 				onChange={(e) => setEditingTodoText(e.target.value)}
 			/>
 			<button onClick={handleSaveEditedTodo}>Сохранить изменения</button>
-			<button onClick={cancelEditing}>Отмена</button>
+			<button onClick={finishEditing}>Отмена</button>
 		</div>
 	);
 }

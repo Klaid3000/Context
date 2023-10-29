@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useContext } from 'react';
+import { AppContext } from '../context';
 
-function NewTodoForm({ addTodo }) {
+function NewTodoForm() {
+	const { addTodo } = useContext(AppContext);
 	const [newTodoText, setNewTodoText] = useState('');
 
 	const handleAddTodo = () => {
